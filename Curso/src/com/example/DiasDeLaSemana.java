@@ -7,6 +7,7 @@ public enum DiasDeLaSemana {
 		valor = dia;
 	}
 	int getValue() { return valor; }
+	DiasLaborables toLaborable() { return DiasLaborables.valueOf(getEnum(valor).toString());}
 	public static DiasDeLaSemana getEnum(int dia) {
 		return switch (dia) {
 		case 1 -> DiasDeLaSemana.LUNES;

@@ -21,9 +21,10 @@ public class Principal {
 
 	public static void enumerados() {
 		DiasDeLaSemana dia = DiasDeLaSemana.LUNES;
-		DiasLaborables x;
+		DiasLaborables x = DiasLaborables.LUNES;
 		Factura.Estado estado = Factura.Estado.PENDIENTE;
-		if(dia == DiasDeLaSemana.LUNES) {
+		
+		if(dia.toLaborable() == DiasLaborables.LUNES) {
 			System.out.println(dia.getValue());
 			dia = DiasDeLaSemana.getEnum(3);
 			System.out.println(dia.toString());
