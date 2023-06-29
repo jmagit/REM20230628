@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
  * Clase principal de la aplicacion
  */
@@ -20,6 +21,8 @@ public class Principal {
 
 	public static void enumerados() {
 		DiasDeLaSemana dia = DiasDeLaSemana.LUNES;
+		DiasLaborables x;
+		Factura.Estado estado = Factura.Estado.PENDIENTE;
 		if(dia == DiasDeLaSemana.LUNES) {
 			System.out.println(dia.getValue());
 			dia = DiasDeLaSemana.getEnum(3);
