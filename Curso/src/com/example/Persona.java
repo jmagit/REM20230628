@@ -5,8 +5,12 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 public abstract class Persona {
+	public static class Asignatura {
+		
+	}
 	public static final int EDAD_MINIMA = 16;
 	public final int EDAD_JUBILACION;
 	private int id;
@@ -17,9 +21,9 @@ public abstract class Persona {
 	private boolean activo = true;
 	private transient int edad;
 	
-	public Persona(){
-		EDAD_JUBILACION = 67;
-	}
+//	public Persona(){
+//		EDAD_JUBILACION = 67;
+//	}
 	
 	public Persona(int id, String nombre, int EDAD_JUBILACION) {
 		setId(id);
@@ -119,4 +123,23 @@ public abstract class Persona {
 	}
 	
 	public abstract void expulsar();
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!(obj instanceof Persona))
+			return false;
+		return id == ((Persona) obj).id;
+	}
+
+	@Override
+	public String toString() {
+		return "Persona [id=" + id + ", nombre=" + nombre + ", apellidos=" + apellidos + "]";
+	}
 }

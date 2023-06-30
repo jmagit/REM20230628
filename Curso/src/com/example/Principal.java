@@ -19,11 +19,35 @@ public class Principal {
 	 * @param args Argumentos de la linea a comandos
 	 */
 	public static void main(String[] args) {
-		clases();
+		facturas();
+	}
+
+	public static void facturas() {
+		var f = new Factura(666);
+		var ff = new Factura(123);
+		f.addLinea(1, 1, 1, 100);
+		ff.addLinea(1, 2, 2, 10);
+		System.out.println(f.getLineas().get(0));
+		f.setNumeroFactura(222);
+		System.out.println(f.getLineas().get(0));
+		System.out.println(ff.getLineas().get(0));
+		class Fact extends Factura {
+			public Fact(int numeroFactura) {
+				super(numeroFactura);
+			}
+
+			@Override
+			public void addLinea(int numero, int idProducto, int cantidad, double precioUnitario) {
+				// TODO Auto-generated method stub
+				super.addLinea(numero, idProducto, cantidad, precioUnitario);
+			}
+		}
+		Factura l = new Fact(1234), ll =  new Fact(234);
+		
 	}
 
 	public static void clases() {
-		Persona p = new Profesor();
+		Persona p = new Profesor(1, "Pepito", 1000);
 //		System.out.println(Date.from(Instant.now()).toLocaleString());
 //		p.setFechaNacimiento(new Date(100, 1, 1));
 //		System.out.println(p.getFechaNacimiento().toLocaleString());
@@ -36,8 +60,8 @@ public class Principal {
 		p.setFechaNacimiento("2023-06-29");
 		System.out.println(p.getFechaNacimiento());
 		System.out.println(p.getEdad());
-		p.setFechaNacimiento(LocalDate.of(2030, 6, 30));
-		
+		//p.setFechaNacimiento(LocalDate.of(2030, 6, 30));
+		Persona.Asignatura asignatura = new Persona.Asignatura();
 	}
 
 	public static void enumerados() {
