@@ -2,6 +2,7 @@ package com.example;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -23,12 +24,17 @@ public class Principal {
 
 	public static void clases() {
 		Persona p = new Profesor();
-		System.out.println(Date.from(Instant.now()).toLocaleString());
-		p.setFechaNacimiento(new Date(100, 1, 1));
-		System.out.println(p.getFechaNacimiento().toLocaleString());
-		p.getFechaNacimiento().setYear(2025);
-		System.out.println(p.getFechaNacimiento().toLocaleString());
-		p.setFechaNacimiento(new Date(1025, 1, 1));
+//		System.out.println(Date.from(Instant.now()).toLocaleString());
+//		p.setFechaNacimiento(new Date(100, 1, 1));
+//		System.out.println(p.getFechaNacimiento().toLocaleString());
+//		p.getFechaNacimiento().setYear(2025);
+//		System.out.println(p.getFechaNacimiento().toLocaleString());
+//		p.setFechaNacimiento(new Date(1025, 1, 1));
+		p.setFechaNacimiento(LocalDate.of(2000, 6, 30));
+		System.out.println(p.getFechaNacimiento());
+		System.out.println(p.getEdad());
+		p.setFechaNacimiento(LocalDate.of(2030, 6, 30));
+		
 	}
 
 	public static void enumerados() {

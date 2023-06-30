@@ -1,15 +1,20 @@
 package com.example;
 
-import java.time.Instant;
-import java.util.Date;
+import java.time.DateTimeException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.util.NoSuchElementException;
 
 public abstract class Persona {
 	public static final int EDAD_MINIMA = 16;
 	public final int EDAD_JUBILACION;
 	private int id;
 	private String nombre, apellidos;
-	private Date fechaNacimiento;
+	private LocalDate fechaNacimiento;
+	private LocalDate fechaBaja;
 	private boolean conflictivo = false;
+	private boolean activo = true;
 	private transient int edad;
 	
 	public Persona(){
@@ -22,7 +27,7 @@ public abstract class Persona {
 		this.EDAD_JUBILACION = EDAD_JUBILACION;
 	}
 
-	public Persona(int id, String nombre, String apellidos, Date fechaNacimiento, boolean conflictivo,
+	public Persona(int id, String nombre, String apellidos, LocalDate fechaNacimiento, boolean conflictivo,
 			int EDAD_JUBILACION) {
 		this(id, nombre, EDAD_JUBILACION);
 		setApellidos(apellidos);
@@ -54,14 +59,32 @@ public abstract class Persona {
 		this.apellidos = apellidos;
 	}
 
-	public Date getFechaNacimiento() {
-		return (Date)fechaNacimiento.clone();
+	public LocalDate getFechaNacimiento() {
+		if(fechaNacimiento == null)
+			throw new NoSuchElementException("Falta la fecha de nacimiento");
+		return fechaNacimiento; // (LocalDate)fechaNacimiento.clone();
 	}
 
-	public void setFechaNacimiento(Date fechaNacimiento) {
-		if(fechaNacimiento.after(Date.from(Instant.now())))
+	public void setFechaNacimiento(LocalDate fechaNacimiento) {
+		if(fechaNacimiento.isAfter(LocalDate.now()))
 			throw new IllegalArgumentException("No puede ser una fecha futura");
 		this.fechaNacimiento = fechaNacimiento;
+		edad = (int) ChronoUnit.YEARS.between(fechaNacimiento, LocalDate.now());
+	}
+	public void setFechaNacimiento(String fechaNacimiento) {
+		setFechaNacimiento(LocalDate.parse(fechaNacimiento, DateTimeFormatter.ISO_LOCAL_DATE));
+	}
+
+	public LocalDate getFechaBaja() {
+		return fechaBaja;
+	}
+
+	public void setFechaBaja(LocalDate fechaBaja) {
+		this.fechaBaja = fechaBaja;
+	}
+
+	public boolean isActivo() {
+		return activo;
 	}
 
 	public boolean isConflictivo() {
@@ -73,6 +96,8 @@ public abstract class Persona {
 	}
 
 	public int getEdad() {
+		if(fechaNacimiento == null)
+			throw new DateTimeException("Falta la fecha de nacimiento");
 		return edad;
 	}
 	
