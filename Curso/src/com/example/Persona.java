@@ -22,7 +22,7 @@ public abstract class Persona {
 	}
 	
 	public Persona(int id, String nombre, int EDAD_JUBILACION) {
-		setId(id);;
+		setId(id);
 		this.setNombre(nombre);
 		this.EDAD_JUBILACION = EDAD_JUBILACION;
 	}
@@ -59,13 +59,16 @@ public abstract class Persona {
 		this.apellidos = apellidos;
 	}
 
+	public boolean hasFechaNacimiento() {
+		return fechaNacimiento != null;
+	}
 	public LocalDate getFechaNacimiento() {
 		if(fechaNacimiento == null)
 			throw new NoSuchElementException("Falta la fecha de nacimiento");
 		return fechaNacimiento; // (LocalDate)fechaNacimiento.clone();
 	}
 
-	public void setFechaNacimiento(LocalDate fechaNacimiento) {
+	public final void setFechaNacimiento(LocalDate fechaNacimiento) {
 		if(fechaNacimiento.isAfter(LocalDate.now()))
 			throw new IllegalArgumentException("No puede ser una fecha futura");
 		this.fechaNacimiento = fechaNacimiento;
@@ -79,12 +82,15 @@ public abstract class Persona {
 		return fechaBaja;
 	}
 
-	public void setFechaBaja(LocalDate fechaBaja) {
+	protected void setFechaBaja(LocalDate fechaBaja) {
 		this.fechaBaja = fechaBaja;
 	}
 
 	public boolean isActivo() {
 		return activo;
+	}
+	public boolean isNotActivo() {
+		return !isActivo();
 	}
 
 	public boolean isConflictivo() {
@@ -101,4 +107,16 @@ public abstract class Persona {
 		return edad;
 	}
 	
+	public void jubilate() throws Exception {
+		if(isNotActivo())
+			throw new Exception("No esta activo para jubilarse");
+
+		if(edad < EDAD_JUBILACION)
+			throw new Exception("No tiene edad para jubilarse");
+		
+		fechaBaja = LocalDate.now();
+		activo = false;
+	}
+	
+	public abstract void expulsar();
 }

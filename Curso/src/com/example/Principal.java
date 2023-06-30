@@ -33,6 +33,9 @@ public class Principal {
 		p.setFechaNacimiento(LocalDate.of(2000, 6, 30));
 		System.out.println(p.getFechaNacimiento());
 		System.out.println(p.getEdad());
+		p.setFechaNacimiento("2023-06-29");
+		System.out.println(p.getFechaNacimiento());
+		System.out.println(p.getEdad());
 		p.setFechaNacimiento(LocalDate.of(2030, 6, 30));
 		
 	}
