@@ -3,7 +3,7 @@ package com.example;
 import java.time.LocalDate;
 import java.util.List;
 
-public class Profesor extends Persona {
+public class Profesor extends Persona implements AutoCloseable {
 	private double salario;
 	private List<String> asignaturas;
 	
@@ -50,6 +50,17 @@ public class Profesor extends Persona {
 		//copia.asignaturas = List.of(asignaturas);
 		return copia;
 	}
+	@Override
+	public void pintate() {
+		System.out.println(toString());
+	}
+
+	@Override
+	public void close() throws Exception {
+		System.out.println("Finalizo: " + toString());
+	}
+	
+
 //
 //	@Override
 //	protected void finalize() throws Throwable {

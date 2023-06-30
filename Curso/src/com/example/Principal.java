@@ -19,7 +19,52 @@ public class Principal {
 	 * @param args Argumentos de la linea a comandos
 	 */
 	public static void main(String[] args) {
-		facturas();
+		genericos();
+	}
+
+	public static void genericos() {
+//		EjemplosGenericos.Elemento e = new EjemplosGenericos.Elemento(28, "Madrid");
+//		e = new EjemplosGenericos.Elemento("8", "Barcelona");
+//		e.setKey('8');
+//		e.setKey(8);
+//		EjemplosGenericos.ElementoInt e2 = new EjemplosGenericos.ElementoInt(28, "Madrid");
+//		e2.setKey("8");
+//		e2 = new EjemplosGenericos.ElementoInt("8", "Barcelona");
+		EjemplosGenericos.Elemento<Integer, String> e = new EjemplosGenericos.Elemento(28, "Madrid");
+		e = new EjemplosGenericos.Elemento("8", "Barcelona");
+		e.setKey(8);
+		EjemplosGenericos.Elemento<Character, String> s = new EjemplosGenericos.Elemento('H', "Hombre");
+		s.setKey('8');
+		Object o = s;
+		if(o instanceof EjemplosGenericos.Elemento ele && ele.getKey() instanceof Integer) {
+			
+		} else if(o instanceof EjemplosGenericos.Elemento ele && ele.getKey() instanceof Integer) {
+			
+		}
+//		EjemplosGenericos.Elemento<Integer, Profesor> e = new EjemplosGenericos.Elemento(28, new Profesor());
+//		e = new EjemplosGenericos.Elemento(28, new Alumno());
+		try(var p = new Profesor()) {
+			System.out.println(p.generico("kk"));
+			System.out.println(p.getEdad());
+			System.out.println(p.generico(5));
+			System.out.println(p.generico(true));
+		} catch(Exception ex) {
+			System.out.println(ex.getMessage());
+		}
+		System.out.println("Fin");
+//		o = p.sinParam(Persona.class);
+		o = 4; // new Integer(4)
+		int i = (int)o + 4; // o.value
+	}
+
+	public static void intefaces() {
+		Grafico grafico = new Factura(666);
+		grafico.pintate();
+		grafico.dimeTuClase();
+		((GraficoPersistente)grafico).dimeTuClase();
+		grafico = new Profesor(1, "Pepito", 1000);
+		grafico.pintate();
+		grafico.dimeTuClase();
 	}
 
 	public static void facturas() {

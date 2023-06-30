@@ -7,7 +7,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
-public abstract class Persona {
+public abstract class Persona implements Grafico {
 	public static class Asignatura {
 		
 	}
@@ -141,5 +141,24 @@ public abstract class Persona {
 	@Override
 	public String toString() {
 		return "Persona [id=" + id + ", nombre=" + nombre + ", apellidos=" + apellidos + "]";
+	}
+	
+	public <T> T generico(T p) {
+		if(p instanceof String s) {
+			return (T) ("Es la cadena " + s);
+		} else if(p instanceof Integer i) {
+			return (T)(Integer)(i*2);
+		}
+		return null;
+		
+	}
+	public <T> T sinParam(Class<T> tipo) {
+//		if(p instanceof String s) {
+//			return (T) ("Es la cadena " + s);
+//		} else if(p instanceof Integer i) {
+//			return (T)(Integer)(i*2);
+//		}
+		return null;
+		
 	}
 }

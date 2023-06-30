@@ -3,7 +3,7 @@ package com.example;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Factura {
+public class Factura implements GraficoPersistente {
 	public enum Estado {
 		PENDIENTE, PAGADA, CANCELADA
 	}
@@ -75,5 +75,16 @@ public class Factura {
 	public void addLinea(int numero, int idProducto, int cantidad, double precioUnitario) {
 		this.lineas.add(new Linea(numero, idProducto, cantidad, precioUnitario));
 	}
-	
+	@Override
+	public void pintate() {
+		System.out.println(toString());
+	}
+//	@Override
+//	public void dimeTuClase() {
+//		System.out.println("Soy una factura");
+//	}
+	@Override
+	public void save() {
+		System.out.println("Se ha guardado");
+	}
 }
