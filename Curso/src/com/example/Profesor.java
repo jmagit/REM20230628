@@ -3,6 +3,8 @@ package com.example;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.example.exceptions.GraficosException;
+
 public class Profesor extends Persona implements AutoCloseable {
 	private double salario;
 	private List<String> asignaturas;
@@ -30,8 +32,13 @@ public class Profesor extends Persona implements AutoCloseable {
 	}
 
 	@Override
+	public void jubilate(LocalDate fecha) throws Exception {
+		super.jubilate(fecha);
+		this.salario = 0;
+	}
+
 	public void jubilate() throws Exception {
-		super.jubilate();
+		super.jubilate(LocalDate.now());
 		this.salario = 0;
 	}
 	
@@ -45,18 +52,27 @@ public class Profesor extends Persona implements AutoCloseable {
 	}
 	
 	@Override
-	protected Profesor clone() throws CloneNotSupportedException {
-		Profesor copia = (Profesor)super.clone();
+	protected Profesor clone() {
+		Profesor copia = null;
+		try {
+			copia = (Profesor)super.clone();
+		} catch (CloneNotSupportedException e) {
+		}
 		//copia.asignaturas = List.of(asignaturas);
 		return copia;
 	}
 	@Override
-	public void pintate() {
+	public void pintate() throws GraficosException {
+		if(getApellidos() == null) 
+			throw new GraficosException("Faltan los apellidos");
+		System.out.println(toString());
+	}
+	public void pinta() {
 		System.out.println(toString());
 	}
 
 	@Override
-	public void close() throws Exception {
+	public void close()  {
 		System.out.println("Finalizo: " + toString());
 	}
 	

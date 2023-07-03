@@ -3,6 +3,8 @@ package com.example;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.exceptions.GraficosException;
+
 public class Factura implements GraficoPersistente {
 	public enum Estado {
 		PENDIENTE, PAGADA, CANCELADA
@@ -76,7 +78,9 @@ public class Factura implements GraficoPersistente {
 		this.lineas.add(new Linea(numero, idProducto, cantidad, precioUnitario));
 	}
 	@Override
-	public void pintate() {
+	public void pintate() throws GraficosException {
+		if(lineas == null || lineas.size() == 0) 
+			throw new GraficosException("Faltan las lineas de factura");
 		System.out.println(toString());
 	}
 //	@Override

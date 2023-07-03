@@ -6,6 +6,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.NoSuchElementException;
 import java.util.Objects;
+import java.util.Optional;
 
 public abstract class Persona implements Grafico {
 	public static class Asignatura {
@@ -52,15 +53,25 @@ public abstract class Persona implements Grafico {
 	}
 
 	public void setNombre(String nombre) {
+		assert nombre != null: "El nombre esta a nulo";
+		assert !nombre.isBlank(): "El nombre no puede estar en blanco" ;
 		this.nombre = nombre;
 	}
 
-	public String getApellidos() {
-		return apellidos;
+	public Optional<String> getApellidos() {
+		if(apellidos == null)
+			return Optional.empty();
+		return Optional.of(apellidos);
+//		return Optional.ofNullable(apellidos);
 	}
 
 	protected void setApellidos(String apellidos) {
+		if(apellidos == null)
+			throw new IllegalArgumentException("El apellido es obligatoria");
 		this.apellidos = apellidos;
+	}
+	protected void clearApellidos() {
+		this.apellidos = null;
 	}
 
 	public boolean hasFechaNacimiento() {
@@ -75,8 +86,11 @@ public abstract class Persona implements Grafico {
 	public final void setFechaNacimiento(LocalDate fechaNacimiento) {
 		if(fechaNacimiento.isAfter(LocalDate.now()))
 			throw new IllegalArgumentException("No puede ser una fecha futura");
+		if(ChronoUnit.YEARS.between(fechaNacimiento, LocalDate.now()) < EDAD_MINIMA)
+			throw new IllegalArgumentException("No tiene la edad minima");
 		this.fechaNacimiento = fechaNacimiento;
 		edad = (int) ChronoUnit.YEARS.between(fechaNacimiento, LocalDate.now());
+		assert edad >= EDAD_MINIMA;
 	}
 	public void setFechaNacimiento(String fechaNacimiento) {
 		setFechaNacimiento(LocalDate.parse(fechaNacimiento, DateTimeFormatter.ISO_LOCAL_DATE));
@@ -111,14 +125,16 @@ public abstract class Persona implements Grafico {
 		return edad;
 	}
 	
-	public void jubilate() throws Exception {
+	public void jubilate(LocalDate fecha) throws Exception {
+		if(fecha == null)
+			throw new IllegalArgumentException("La fecha es obligatoria");
 		if(isNotActivo())
 			throw new Exception("No esta activo para jubilarse");
 
 		if(edad < EDAD_JUBILACION)
 			throw new Exception("No tiene edad para jubilarse");
 		
-		fechaBaja = LocalDate.now();
+		fechaBaja = fecha; // LocalDate.now();
 		activo = false;
 	}
 	

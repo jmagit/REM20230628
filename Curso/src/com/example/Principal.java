@@ -1,11 +1,15 @@
 package com.example;
 
 import java.math.BigDecimal;
+import java.time.DateTimeException;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.function.BinaryOperator;
+
+import com.example.exceptions.GraficosException;
 
 
 /**
@@ -19,11 +23,62 @@ public class Principal {
 	 * @param args Argumentos de la linea a comandos
 	 */
 	public static void main(String[] args) {
-		genericos();
+		try {
+			delegados();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public static double divide(double a, double b) { return a / b; }
+	public static double calcula(double a, double b, BinaryOperator<Double> calc) { 
+		return calc.apply(a, b);
+	}
+
+	static class Calculadora {
+		public double suma(double a, double b) { return a + b; }
+		public double divide(double a, double b) { return a / b; }
+
+	}
+	public static void delegados() {
+		BinaryOperator<Double> op = (a, b) -> a + b;
+		
+		System.out.println(calcula(2.0,3.0, op));
+		op = (a, b) -> a * b;
+		System.out.println(calcula(2.0,3.0, op));
+		System.out.println(calcula(2.0,3.0, (a, b) -> {
+			double rslt;
+			rslt = a - b;
+			return rslt;
+		}));
+		System.out.println(calcula(2.0,3.0, (a, b) -> a - b));
+		System.out.println(calcula(2.0,3.0, new BinaryOperator<Double>() {
+			@Override
+			public Double apply(Double a, Double b) {
+				return a - b;
+			}
+		} ));
+		
+		System.out.println(calcula(2.0,3.0, Principal::divide));
+		var c = new Calculadora();
+		System.out.println(calcula(2.0,3.0, c::suma));
+		System.out.println(calcula(2.0,3.0, c::divide));
+		var t = List.of( 1, 2, 3);
+		t.forEach(System.out::println);
+		t.forEach(item-> {
+			System.out.println(item);
+		});
+		var list = List.of( new Profesor(1, "Uno", 1000), new Profesor(2, "Otro", 1000));
+		list.forEach(Profesor::pinta);
+		list.forEach(item-> {
+			item.pinta();
+		});
+		
 	}
 
 	public static void genericos() {
-//		EjemplosGenericos.Elemento e = new EjemplosGenericos.Elemento(28, "Madrid");
+//		EjemplosGenericos.Elemento e = new EjemplosGenericos.(28, "Madrid");
 //		e = new EjemplosGenericos.Elemento("8", "Barcelona");
 //		e.setKey('8');
 //		e.setKey(8);
@@ -45,9 +100,12 @@ public class Principal {
 //		e = new EjemplosGenericos.Elemento(28, new Alumno());
 		try(var p = new Profesor()) {
 			System.out.println(p.generico("kk"));
+			p.setId(-1);
 			System.out.println(p.getEdad());
 			System.out.println(p.generico(5));
 			System.out.println(p.generico(true));
+		} catch(DateTimeException ex) {
+			System.out.println("especifica: " + ex.getMessage());
 		} catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}
@@ -57,12 +115,35 @@ public class Principal {
 		int i = (int)o + 4; // o.value
 	}
 
-	public static void intefaces() {
+	public static void intefaces() throws Exception {
 		Grafico grafico = new Factura(666);
-		grafico.pintate();
-		grafico.dimeTuClase();
-		((GraficoPersistente)grafico).dimeTuClase();
-		grafico = new Profesor(1, "Pepito", 1000);
+//		try {
+//			grafico.pintate();
+//		} catch (GraficosException ex) {
+////			throw new Exception("No puedo pintar", ex );
+//			System.out.println("Error");
+//			throw ex;
+//		}
+//		grafico.dimeTuClase();
+//		((GraficoPersistente)grafico).dimeTuClase();
+		var p  = new Profesor(1, "Pepito", 1000);
+		p.setFechaNacimiento("2023-07-01");
+		grafico = p;
+		var a = ((Profesor)grafico).getApellidos();
+		
+		if(a.isPresent())
+			System.out.println(a.get());
+		else {
+			System.out.println("No tiene apellidos");
+		}
+		var n = ((Profesor)grafico).getNombre();
+		if(n != null) {
+			
+		}
+		if(p.hasFechaNacimiento()) {
+			var f = p.getFechaNacimiento();
+		}
+		
 		grafico.pintate();
 		grafico.dimeTuClase();
 	}
