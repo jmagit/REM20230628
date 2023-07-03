@@ -7,6 +7,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.BiConsumer;
 
 public abstract class Persona implements Grafico {
 	public static class Asignatura {
@@ -21,6 +22,7 @@ public abstract class Persona implements Grafico {
 	private boolean conflictivo = false;
 	private boolean activo = true;
 	private transient int edad;
+	BiConsumer<Object, String> notificacion = null;
 	
 //	public Persona(){
 //		EDAD_JUBILACION = 67;
@@ -136,6 +138,7 @@ public abstract class Persona implements Grafico {
 		
 		fechaBaja = fecha; // LocalDate.now();
 		activo = false;
+		onNotificacion("Se ha jubilado");
 	}
 	
 	public abstract void expulsar();
@@ -176,5 +179,18 @@ public abstract class Persona implements Grafico {
 //		}
 		return null;
 		
+	}
+	
+	public void addNotificacionListener(BiConsumer<Object, String> notificacion) {
+		this.notificacion = notificacion;
+	}
+	
+	public void removeNotificacionListener(BiConsumer<Object, String> notificacion) {
+		this.notificacion = null;
+	}
+	protected void onNotificacion(String mensaje) {
+		if(notificacion!= null) {
+			notificacion.accept(this, mensaje);
+		}
 	}
 }

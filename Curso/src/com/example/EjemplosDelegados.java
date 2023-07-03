@@ -6,19 +6,28 @@ import java.util.function.BinaryOperator;
 
 public class EjemplosDelegados {
 	enum Tipo { bin, text, binDesc, textDesc }
+	
+	@FunctionalInterface
 	interface Comp {
 		int comp(String a, String b); // 1: a > b, 0: a == b; -1: a < b
 	}
 	
 	void ejemplos() {
-		String t[] = null;
-		
+		class X implements Comp {
+			@Override
+			public int comp(String a, String b) {
+				return a.compareTo(b);
+			}
+		}
+		var x = new X();
+		var y = new X();
 		var bin = new Comp() {
 			@Override
 			public int comp(String a, String b) {
 				return a.compareTo(b);
 			}
 		};
+		String t[] = null;
 		
 //		var tt = ordena(t, bin);
 //		tt = ordena(t, new Comp() {

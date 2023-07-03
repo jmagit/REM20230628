@@ -7,6 +7,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
+import java.util.function.BiConsumer;
 import java.util.function.BinaryOperator;
 
 import com.example.exceptions.GraficosException;
@@ -24,11 +26,22 @@ public class Principal {
 	 */
 	public static void main(String[] args) {
 		try {
-			delegados();
+			registros();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	public static void registros() throws Exception {
+		var p1 = new Coordenada(10, 10);
+		System.out.println(p1);
+		System.out.println(p1.getX() + ":" + p1.getY());
+		var p2 = new Punto(11, 11);
+		System.out.println(p2);
+		System.out.println(p2.x() + ":" + p2.y());
+		System.out.println(p2.resta(new Punto(2, 2)));
+		System.out.println(p2.resta(1));
+		System.out.println(p2);
 	}
 
 	public static double divide(double a, double b) { return a / b; }
@@ -41,7 +54,7 @@ public class Principal {
 		public double divide(double a, double b) { return a / b; }
 
 	}
-	public static void delegados() {
+	public static void delegados() throws Exception {
 		BinaryOperator<Double> op = (a, b) -> a + b;
 		
 		System.out.println(calcula(2.0,3.0, op));
@@ -70,10 +83,19 @@ public class Principal {
 			System.out.println(item);
 		});
 		var list = List.of( new Profesor(1, "Uno", 1000), new Profesor(2, "Otro", 1000));
+		BiConsumer<Object, String> ev = (o, m) -> {
+			System.out.println(((Persona)o).getNombre() + " " + m);
+		};
+		list.forEach(item-> item.addNotificacionListener(ev));
 		list.forEach(Profesor::pinta);
+		list.get(0).setFechaNacimiento("1955-10-01");
+		list.get(0).jubilate();
 		list.forEach(item-> {
 			item.pinta();
 		});
+		list.get(1).removeNotificacionListener(ev);
+		list.get(1).setFechaNacimiento("1950-10-01");
+		list.get(1).jubilate();
 		
 	}
 
