@@ -1,6 +1,8 @@
 package com.example;
 
 import java.io.PrintStream;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,14 +29,18 @@ public class Principal {
 //		app.decode("0,1+0,2+0,7-0,9=");
 		try {
 //			app.calcula("3+4+3,4-7*1=");
-//			app.calcula("0,1+0,2+0,7-0,9=");
-			app.calculaList("3+4+3,4-7*1=");
-			app.calculaList("0,1+0,2+0,7-0,9=");
+			app.calcula("0,1+0,2+0,7-0,9=");
+//			app.calculaList("3+4+3,4-7*1=");
+//			app.calculaList("0,1+0,2+0,7-0,9=");
 		} catch (CalculadoraException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+//		double a = 0.1+0.2, b = 1 - 0.9;
+//		System.out.println(Double.compare(a, 0.3) == 0 ? "Es igual":"Distintos");
+//		System.out.println(a + " + " + Double.parseDouble(String.format("%.15f", b).replace(',','.'))  + " = " + (a+b));
+		//System.out.println((new BigDecimal(0.1+0.2)).setScale(16, RoundingMode.HALF_DOWN).doubleValue());
 //		app.naipes();
 //		app.vending();
 	}
@@ -124,8 +130,8 @@ public class Principal {
 				if (operando.indexOf(ch) == -1) {
 					operando += ch;
 //                    operando += '.';
-				} else {
-					// throw new Exception("Ya existe separador decimal.");
+//				} else {
+//					 throw new Exception("Ya existe separador decimal.");
 				}
 			} else if ("+-*/%=".indexOf(ch) >= 0) {
 				if (operando.endsWith(",")) {

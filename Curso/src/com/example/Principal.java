@@ -26,11 +26,37 @@ public class Principal {
 	 */
 	public static void main(String[] args) {
 		try {
-			registros();
+			reflexion("com.example.Calculadora", "calc");
+			reflexion("com.example.Falsa", "divide");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	public static void reflexion(String clase, String metodo) throws Exception {
+		Class tipo = Class.forName(clase);
+		Object object = tipo.newInstance();
+		var m = tipo.getMethod(metodo, String.class, Character.TYPE);
+		System.out.println(m.invoke(object, "3", '+'));
+		System.out.println(m.invoke(object, "2", '='));
+	}
+	public static void reflexion() throws Exception {
+		var clase = "com.example.Calculadora";
+		var metodo = "calc";
+		Class tipo = Class.forName(clase);
+		Object object = tipo.newInstance();
+		for(var m : tipo.getMethods()) {
+			System.out.println(m.getName());
+			if(m.getName().equals(metodo)) {
+				System.out.println(m.invoke(object, "3", '+'));
+				System.out.println(m.invoke(object, "2", '='));
+			}
+		}
+		for(var m : tipo.getDeclaredFields()) {
+			System.out.println(m.getName());
+		}
+		
+//		var m = tipo.getMethod(null, null)
 	}
 	public static void registros() throws Exception {
 		var p1 = new Coordenada(10, 10);
@@ -49,9 +75,10 @@ public class Principal {
 		return calc.apply(a, b);
 	}
 
-	static class Calculadora {
+	public static class Calculadora {
 		public double suma(double a, double b) { return a + b; }
 		public double divide(double a, double b) { return a / b; }
+		public String divide(String a, char b) { return "Hola mundo"; }
 
 	}
 	public static void delegados() throws Exception {

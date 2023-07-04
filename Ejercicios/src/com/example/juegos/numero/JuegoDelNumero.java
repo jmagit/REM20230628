@@ -68,7 +68,7 @@ public class JuegoDelNumero implements Juego<String> {
      */
     @Override
     public void inicializar() {
-//     numeroBuscado = (new Random()).nextInt(100) + 1;
+//     numeroBuscado = (new Random()).nextInt(99) + 1;
         numeroBuscado = (int) (Math.random() * 100 + 1);
         System.out.println("Objetivo: " + numeroBuscado);
         intentos = 0;

@@ -10,6 +10,7 @@ public class EjemplosDelegados {
 	@FunctionalInterface
 	interface Comp {
 		int comp(String a, String b); // 1: a > b, 0: a == b; -1: a < b
+		default int comp2(String a, String b) { return 0; }
 	}
 	
 	void ejemplos() {

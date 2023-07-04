@@ -67,6 +67,7 @@ public class Profesor extends Persona implements AutoCloseable {
 			throw new GraficosException("Faltan los apellidos");
 		System.out.println(toString());
 	}
+	@Deprecated
 	public void pinta() {
 		System.out.println(toString());
 	}
