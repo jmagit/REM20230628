@@ -1,5 +1,7 @@
 package com.example;
 
+import java.io.Serial;
+import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.time.DateTimeException;
 import java.time.Instant;
@@ -12,7 +14,9 @@ import java.util.function.BiConsumer;
 import java.util.function.BinaryOperator;
 
 import com.example.exceptions.GraficosException;
-
+import com.example.util.Autor;
+import com.example.Calculadora;
+import com.example.contracts.Grafico;
 
 /**
  * Clase principal de la aplicacion
@@ -26,12 +30,19 @@ public class Principal {
 	 */
 	public static void main(String[] args) {
 		try {
-			reflexion("com.example.Calculadora", "calc");
-			reflexion("com.example.Falsa", "divide");
+//			reflexion("com.example.Calculadora", "calc");
+//			reflexion("com.example.Falsa", "divide");
+			anotaciones();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	public static void anotaciones() throws Exception {
+		for(var a: com.example.Calculadora.class.getAnnotations())
+			System.out.println(a.annotationType().getName());
+		System.out.println(com.example.Calculadora.class.getAnnotation(Autor.class).nombre());
+		System.out.println(Profesor.class.getAnnotation(Autor.class).nombre());
 	}
 	public static void reflexion(String clase, String metodo) throws Exception {
 		Class tipo = Class.forName(clase);
@@ -45,6 +56,13 @@ public class Principal {
 		var metodo = "calc";
 		Class tipo = Class.forName(clase);
 		Object object = tipo.newInstance();
+		for(var cmp: tipo.getDeclaredFields())
+			System.out.println(cmp.getName());
+		Field cmp = tipo.getDeclaredField("acumulado");
+		cmp.setAccessible(true);
+		System.out.println(cmp.get(object));
+		cmp.set(object, new BigDecimal(-1));
+		System.out.println(cmp.get(object));
 		for(var m : tipo.getMethods()) {
 			System.out.println(m.getName());
 			if(m.getName().equals(metodo)) {
@@ -75,6 +93,7 @@ public class Principal {
 		return calc.apply(a, b);
 	}
 
+	@Deprecated
 	public static class Calculadora {
 		public double suma(double a, double b) { return a + b; }
 		public double divide(double a, double b) { return a / b; }

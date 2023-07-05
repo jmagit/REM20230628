@@ -1,4 +1,4 @@
-package com.example;
+package com.example.contracts;
 
 public interface Persistente {
 	void save();

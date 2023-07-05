@@ -4,14 +4,16 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.List;
-
+import static java.lang.Math.*;
 import com.example.exceptions.CalculadoraException;
+import com.example.util.Autor;
 
 /**
  * Clase simple para realizar cálculos acumulados.
  *
  * @author Javier
  */
+@Autor(nombre = "Ejercicio")
 public class Calculadora {
 
     /**
@@ -19,6 +21,7 @@ public class Calculadora {
      */
     public static final String OPERACIONES_SOPORTADAS = "+-*/=%";
 
+    @Autor
     private BigDecimal acumulado;
     private char operadorPendiente;
 

@@ -4,7 +4,9 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.example.exceptions.GraficosException;
+import com.example.util.Autor;
 
+@Autor(nombre = "demo")
 public class Profesor extends Persona implements AutoCloseable {
 	private double salario;
 	private List<String> asignaturas;

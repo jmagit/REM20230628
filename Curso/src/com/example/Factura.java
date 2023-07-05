@@ -3,6 +3,7 @@ package com.example;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.contracts.GraficoPersistente;
 import com.example.exceptions.GraficosException;
 
 public class Factura implements GraficoPersistente {

@@ -9,6 +9,8 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.function.BiConsumer;
 
+import com.example.contracts.Grafico;
+
 public abstract class Persona implements Grafico {
 	public static class Asignatura {
 		
