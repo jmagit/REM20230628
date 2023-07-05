@@ -7,9 +7,12 @@ import java.time.DateTimeException;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.BinaryOperator;
 
@@ -32,11 +35,41 @@ public class Principal {
 		try {
 //			reflexion("com.example.Calculadora", "calc");
 //			reflexion("com.example.Falsa", "divide");
-			anotaciones();
+			colecciones();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	public static void colecciones() throws Exception {
+		var list = List.of( new Profesor(2, "Uno", 1000), new Profesor(2, "Otro", 1000));
+		System.out.println(list.get(0).equals(list.get(1))? "equals" : "no equals");
+		System.out.println(list.get(0).hashCode() == list.get(1).hashCode()? "hashCode" : "no hashCode");
+		System.out.println(list.get(0).compareTo(list.get(1)) == 0 ? "compareTo" : "no compareTo");
+		System.out.println(list.get(0).compareTo(list.get(1)));
+		var conjunto = new HashSet<>();
+		conjunto.addAll(list);
+		System.out.println(conjunto.size());
+		var inmutable = Collections.unmodifiableSet(conjunto);
+		System.out.println(inmutable.size());
+		inmutable.add(new Profesor(3, "Uno", 1000));
+		System.out.println(inmutable.size());
+	}
+	public static void biblioteca() throws Exception {
+		String cad = "";
+		for(var i = 0; i < 100; i++) {
+			cad += "X";
+		}
+		System.out.println(cad);
+		boolean a = false;
+		// ...
+		if(!a) {}
+		StringBuilder sb = new StringBuilder("");
+		for(var i = 0; i < 100; i++) {
+			sb.append("X");
+		}
+		System.out.println(sb.toString());
+		
 	}
 	public static void anotaciones() throws Exception {
 		for(var a: com.example.Calculadora.class.getAnnotations())

@@ -2,6 +2,7 @@ package com.example;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import com.example.contracts.GraficoPersistente;
 import com.example.exceptions.GraficosException;
@@ -92,4 +93,23 @@ public class Factura implements GraficoPersistente {
 	public void save() {
 		System.out.println("Se ha guardado");
 	}
+	@Override
+	public int hashCode() {
+		return Objects.hash(numeroFactura);
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if(obj instanceof Integer)
+			return numeroFactura == (int)obj;
+		
+		if (getClass() != obj.getClass())
+			return false;
+		Factura other = (Factura) obj;
+		return numeroFactura == other.numeroFactura;
+	}
+	
 }

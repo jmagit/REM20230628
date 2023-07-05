@@ -10,8 +10,9 @@ import java.util.Optional;
 import java.util.function.BiConsumer;
 
 import com.example.contracts.Grafico;
+import com.example.exceptions.GraficosException;
 
-public abstract class Persona implements Grafico {
+public abstract class Persona implements Grafico, Comparable<Persona> {
 	public static class Asignatura {
 		
 	}
@@ -195,4 +196,10 @@ public abstract class Persona implements Grafico {
 			notificacion.accept(this, mensaje);
 		}
 	}
+
+	@Override
+	public int compareTo(Persona o) {
+		return id - o.id;
+	}
+
 }
