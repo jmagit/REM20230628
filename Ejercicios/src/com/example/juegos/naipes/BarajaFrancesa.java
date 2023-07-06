@@ -4,6 +4,7 @@ import com.example.juegos.JuegoException;
 
 public class BarajaFrancesa extends Baraja<NaipeFrances> {
 	public BarajaFrancesa() {
+//		super(null);
 		super(generaCartas());
 	}
 

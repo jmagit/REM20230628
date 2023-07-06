@@ -49,11 +49,11 @@ public class Baraja {
 			.map(item -> new Orden(item, rnd.nextInt(1000)))
 			.sorted((a, b) -> a.posicion - b.posicion)
 			.map(item -> item.carta)
-			.collect(Collectors.toList()));
+			.toList());
 	}
 	
 	public List<Naipe> getMazo() {
-		return mazo.stream().collect(Collectors.toList());
+		return mazo.stream().toList();
 	}
 	
 	public List<List<Naipe>> reparte(int jugadores, int cartas) {
@@ -76,7 +76,8 @@ public abstract class Baraja<T> {
     private T[] cartas;
     private Deque<T> mazo;
 
-    public Baraja(T[] cartas) {
+    protected Baraja(T[] cartas) {
+    	assert cartas != null && cartas.length > 0 : "Faltan las cartas";
         this.cartas = cartas;
     }
 
@@ -85,34 +86,32 @@ public abstract class Baraja<T> {
     }
 
     public void barajar() {
-//        class Orden {
-//
-//            public T carta;
-//            public int posicion;
-//
-//            public Orden(T carta, int posicion) {
-//                super();
-//                this.carta = carta;
-//                this.posicion = posicion;
-//            }
-//        }
-//        Random rnd = new Random();
-//        mazo = new ArrayDeque<T>(Arrays.asList(cartas).stream()
-//                .map(item -> new Orden(item, rnd.nextInt(10000)))
-//                .sorted((a, b) -> a.posicion - b.posicion)
-//                .map(item -> item.carta)
-//                .collect(Collectors.toList()));
+        class Orden {
+            public final T carta;
+            public final int posicion;
 
-        var lista = Arrays.asList(cartas);
-        Collections.shuffle(lista);
-        mazo = new ArrayDeque<T>(lista);
+            public Orden(T carta, int posicion) {
+                this.carta = carta;
+                this.posicion = posicion;
+            }
+        }
+        Random rnd = new Random();
+        mazo = new ArrayDeque<T>(Arrays.asList(cartas).stream()
+                .map(item -> new Orden(item, rnd.nextInt(10000)))
+                .sorted((a, b) -> a.posicion - b.posicion)
+                .map(item -> item.carta)
+                .toList());
+
+//        var lista = Arrays.asList(cartas);
+//        Collections.shuffle(lista);
+//        mazo = new ArrayDeque<T>(lista);
     }
 
     public List<T> getMazo() throws JuegoException {
         if (mazo == null) {
             throw new JuegoException("Es necesario barajar.");
         }
-        return mazo.stream().collect(Collectors.toList());
+        return mazo.stream().toList();
     }
 
     public boolean isQuedanCartas() {

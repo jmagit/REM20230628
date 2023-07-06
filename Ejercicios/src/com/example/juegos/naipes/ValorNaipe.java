@@ -11,37 +11,22 @@ public enum ValorNaipe {
     }
 
     public static ValorNaipe toEnum(int valor) {
-        switch (valor) {
-            case 0:
-                return COMODIN;
-            case 1:
-                return AS;
-            case 2:
-                return DOS;
-            case 3:
-                return TRES;
-            case 4:
-                return CUATRO;
-            case 5:
-                return CINCO;
-            case 6:
-                return SEIS;
-            case 7:
-                return SIETE;
-            case 8:
-                return OCHO;
-            case 9:
-                return NUEVE;
-            case 10:
-                return DIEZ;
-            case 11:
-                return JOTA;
-            case 12:
-                return REINA;
-            case 13:
-                return REY;
-            default:
-                throw new IllegalArgumentException("No es un valor de la enumeración.");
-        }
+        return switch (valor) {
+            case 0 -> COMODIN;
+            case 1 -> AS;
+            case 2 -> DOS;
+            case 3 -> TRES;
+            case 4 -> CUATRO;
+            case 5 -> CINCO;
+            case 6 -> SEIS;
+            case 7 -> SIETE;
+            case 8 -> OCHO;
+            case 9 -> NUEVE;
+            case 10 -> DIEZ;
+            case 11 -> JOTA;
+            case 12 -> REINA;
+            case 13 -> REY;
+            default -> throw new IllegalArgumentException("No es un valor de la enumeración.");
+        };
     }
 }

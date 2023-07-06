@@ -22,8 +22,8 @@ public class NaipeFrances extends Naipe<NaipeFrances.Palos> {
 	
 	@Override
 	protected String[] getLiterales() {
-		var rslt = Stream.of(ValorNaipe.values()).map(item -> item.toString()).collect(Collectors.toList());
-		return rslt.toArray(new String[1]); //;
+		var result = Stream.of(ValorNaipe.values()).map(item -> item.toString()).toList();
+		return result.toArray(new String[1]); //;
 	}
 	
 	private static byte validaValor(byte valor) throws JuegoException {

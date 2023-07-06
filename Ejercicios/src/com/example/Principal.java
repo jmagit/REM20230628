@@ -5,14 +5,19 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.function.BiConsumer;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import com.example.juegos.Juego;
 import com.example.juegos.JuegoException;
 import com.example.juegos.naipes.BarajaFrancesa;
+import com.example.juegos.naipes.NaipeFrances;
 import com.example.juegos.naipes.ValorNaipe;
 import com.example.juegos.numero.JuegoDelNumero.NotificaEventArgs;
 import com.example.vending.Maquina;
@@ -27,24 +32,25 @@ public class Principal {
 //		app.juegoConClase();
 //		app.decode("3+4+3,4-7*1=");
 //		app.decode("0,1+0,2+0,7-0,9=");
-		try {
-//			app.calcula("3+4+3,4-7*1=");
-			app.calcula("0,1+0,2+0,7-0,9=");
-//			app.calculaList("3+4+3,4-7*1=");
-//			app.calculaList("0,1+0,2+0,7-0,9=");
-		} catch (CalculadoraException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+//		try {
+////			app.calcula("3+4+3,4-7*1=");
+//			app.calcula("0,1+0,2+0,7-0,9=");
+////			app.calculaList("3+4+3,4-7*1=");
+////			app.calculaList("0,1+0,2+0,7-0,9=");
+//		} catch (CalculadoraException e) {
+//			e.printStackTrace();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
 //		double a = 0.1+0.2, b = 1 - 0.9;
 //		System.out.println(Double.compare(a, 0.3) == 0 ? "Es igual":"Distintos");
 //		System.out.println(a + " + " + Double.parseDouble(String.format("%.15f", b).replace(',','.'))  + " = " + (a+b));
-		//System.out.println((new BigDecimal(0.1+0.2)).setScale(16, RoundingMode.HALF_DOWN).doubleValue());
-//		app.naipes();
+		// System.out.println((new BigDecimal(0.1+0.2)).setScale(16,
+		// RoundingMode.HALF_DOWN).doubleValue());
+		app.naipes();
 //		app.vending();
 	}
-	
+
 	/**
 	 * Juego de “Adivina el número que estoy pensando”, un número del 1 al 100, ya
 	 * te diré si es mayor o menor que el mío, pero tienes 10 intentos como mucho.
@@ -72,7 +78,7 @@ public class Principal {
 				intentos--;
 				out.println("No es un número.");
 			}
-		} while (intentos < 10 /* && !encontrado*/);
+		} while (intentos < 10 /* && !encontrado */);
 		if (encontrado) {
 			out.println("Bieeen!!! Acertaste.");
 		} else {
@@ -100,7 +106,7 @@ public class Principal {
 					if (juego.getFinalizado()) {
 						break;
 					}
-					if(intentos == 2) 
+					if (intentos == 2)
 						((com.example.juegos.numero.JuegoDelNumero) juego).removeNotificaListener(cancel);
 				} catch (JuegoException e) {
 					if (e.getCause() instanceof NumberFormatException) {
@@ -115,7 +121,7 @@ public class Principal {
 		}
 		out.println("Juego finalizado");
 	}
-	
+
 	public void decode(String expresion) {
 		if (expresion == null || "".equals(expresion)
 				|| !Character.isDigit(expresion.charAt(0)) /* || !expresion.endsWith("=") */) {
@@ -182,91 +188,107 @@ public class Principal {
 		return calculadora.getAcumulado();
 	}
 
-    public List<Calculadora.Operacion> decodeToList(String expresion) {
-        if (expresion == null || "".equals(expresion) || !Character.isDigit(expresion.charAt(0))) {
-            throw new java.lang.IllegalArgumentException("No es una expresión valida");
-        }
-        List<Calculadora.Operacion> resulatado = new ArrayList<>();
-        String operando = "";
-        for (int i = 0; i < expresion.length(); i++) {
-            char ch = expresion.charAt(i);
-            if (Character.isDigit(ch)) {
-                operando += ch;
-            } else if (ch == ',') {
-                if (operando.indexOf(ch) == -1) {
-                    operando += ch;
+	public List<Calculadora.Operacion> decodeToList(String expresion) {
+		if (expresion == null || "".equals(expresion) || !Character.isDigit(expresion.charAt(0))) {
+			throw new java.lang.IllegalArgumentException("No es una expresión valida");
+		}
+		List<Calculadora.Operacion> resulatado = new ArrayList<>();
+		String operando = "";
+		for (int i = 0; i < expresion.length(); i++) {
+			char ch = expresion.charAt(i);
+			if (Character.isDigit(ch)) {
+				operando += ch;
+			} else if (ch == ',') {
+				if (operando.indexOf(ch) == -1) {
+					operando += ch;
 //                } else {
 //                     throw new Exception("Ya existe separador decimal.");
-                }
-            } else if ("+-*/%=".indexOf(ch) >= 0) {
-                if (operando.endsWith(",")) {
-                    operando += "0";
-                }
-                resulatado.add(new Calculadora.Operacion(operando, ch));
-                if (ch == '=') {
-                    break;
-                }
-                operando = "";
+				}
+			} else if ("+-*/%=".indexOf(ch) >= 0) {
+				if (operando.endsWith(",")) {
+					operando += "0";
+				}
+				resulatado.add(new Calculadora.Operacion(operando, ch));
+				if (ch == '=') {
+					break;
+				}
+				operando = "";
 //            } else if (ch != ' ') {
 //				throw new Exception("Carácter no valido.");
-            }
-        }
-        return resulatado;
+			}
+		}
+		return resulatado;
 
-    }
+	}
 
-    public void calculaList(String expresion) throws CalculadoraException, Exception {
-        try {
-            var operaciones = decodeToList(expresion);
-            for (Calculadora.Operacion operacion : operaciones) {
-                System.out.println(operacion.operando() + " " + operacion.operador());
-            }
-            System.out.println((new Calculadora()).calcula(operaciones));
-        } catch (CalculadoraException e) {
-            e.printStackTrace();
-        }
-    }
+	public void calculaList(String expresion) throws CalculadoraException, Exception {
+		try {
+			var operaciones = decodeToList(expresion);
+			for (Calculadora.Operacion operacion : operaciones) {
+				System.out.println(operacion.operando() + " " + operacion.operador());
+			}
+			System.out.println((new Calculadora()).calcula(operaciones));
+		} catch (CalculadoraException e) {
+			e.printStackTrace();
+		}
+	}
 
-    private void naipes() {
-        var b = new BarajaFrancesa();
+	private void naipes() {
+		var b = new BarajaFrancesa();
 
-        try {
-            System.out.println("Baraja\n-------------------------------");
-            for (var c : b.getCartas()) {
-                System.out.println(c);
-            }
-            System.out.println("\nMazo\n-------------------------------");
-            b.barajar();
-            b.getMazo().forEach(System.out::println);
-            b.reparte(4, 5).forEach(item -> {
-                System.out.println("\nJugador\n-------------------------------");
-                item.forEach(System.out::println);
-            });
-            System.out.println("\nQuedan " + b.getMazo().size());
-            var mano = b.reparte(1, 2);
-            System.out.println("\nQuedan " + b.getMazo().size());
-            b.reparte(4, 5).forEach(item -> {
-                System.out.println("\nJugador\n-------------------------------");
-                item.forEach(System.out::println);
-            });
-            System.out.println("\nQuedan " + b.getMazo().size());
-            mano.forEach(item -> {
-                System.out.println("\nJugador\n-------------------------------");
-                item.forEach(System.out::println);
-            });
-            System.out.println("\nQuedan " + b.getMazo().size());
-            b.apilar(mano.get(0));
-            b.getMazo().forEach(System.out::println);
-            // b.apilar(mano.get(0));
-            // b.apilar(List.of(new NaipeFrances(NaipeFrances.Palos.CORAZONES, (byte)1)));
-            System.out.println("\nQuedan " + b.getMazo().size());
-            System.out.println(ValorNaipe.REINA.valorNumerico);
-            System.out.println(ValorNaipe.toEnum(12));
-        } catch (JuegoException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-    }
+		try {
+			System.out.println("Baraja\n-------------------------------");
+			Arrays.stream(b.getCartas()).forEach(System.out::println);
+			System.out.println("\nMazo\n-------------------------------");
+			b.barajar();
+			b.getMazo().forEach(System.out::println);
+			var manos = b.reparte(4, 5);
+			manos.forEach(item -> {
+				System.out.println("\nJugador\n-------------------------------");
+				item.forEach(System.out::println);
+			});
+			System.out.println("\nQuedan " + b.getMazo().size());
+			b.reparte(4, 5).forEach(item -> {
+				System.out.println("\nJugador\n-------------------------------");
+				item.forEach(System.out::println);
+			});
+			System.out.println("\nQuedan " + b.getMazo().size());
+			System.out.println("\nPide 2");
+			var mano = b.reparte(1, 2);
+			mano.forEach(item -> {
+				System.out.println("Jugador (mano)\n-------------------------------");
+				item.forEach(System.out::println);
+			});
+			System.out.println("\nQuedan " + b.getMazo().size());
+			b.apilar(mano.get(0));
+			System.out.println("\nApila " + mano.get(0).size());
+			b.getMazo().forEach(System.out::println);
+			// b.apilar(mano.get(0));
+			// b.apilar(List.of(new NaipeFrances(NaipeFrances.Palos.CORAZONES, (byte)1)));
+			System.out.println("\nQuedan " + b.getMazo().size());
+			Map<NaipeFrances.Palos, List<NaipeFrances>> grupos = manos.get(0).stream()
+					   .collect(Collectors.groupingBy(NaipeFrances::getPalo));
+			manos.stream()			   
+			   .forEach(jugador -> { 
+				   System.out.println("\nJugador\n-------------------------------");
+				   jugador.stream().collect(Collectors.groupingBy(NaipeFrances::getPalo))
+				   	.forEach((p, c) -> System.out.println(p + ": " + c.size()));
+				   });
+			manos.stream()			   
+			   .forEach(jugador -> { 
+				   System.out.println("\nJugador\n-------------------------------");
+				   jugador.stream().collect(Collectors.groupingBy(NaipeFrances::getLiteral))
+				   	.forEach((p, c) -> System.out.println(p + ": " + c.size()));
+				   });
+			System.out.println("\nValores\n-------------------------------");
+			System.out.println("La reina vale " + ValorNaipe.REINA.valorNumerico);
+			System.out.println("El valor 12 es " + ValorNaipe.toEnum(12));
+			
+		} catch (JuegoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	private void vending() {
 		var maquina = new Maquina();
@@ -289,6 +311,5 @@ public class Principal {
 		System.out.println("Consumos");
 		maquina.consumos().forEach(System.out::println);
 	}
-
 
 }
