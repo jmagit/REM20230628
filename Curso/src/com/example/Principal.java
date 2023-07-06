@@ -39,7 +39,7 @@ public class Principal {
 		try {
 //			reflexion("com.example.Calculadora", "calc");
 //			reflexion("com.example.Falsa", "divide");
-			paralelos();
+			consultas();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

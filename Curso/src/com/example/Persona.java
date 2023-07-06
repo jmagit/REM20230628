@@ -201,13 +201,14 @@ public abstract class Persona implements Grafico, Comparable<Persona>, Cloneable
 	public int compareTo(Persona o) {
 		return id - o.id;
 	}
-//	@Override
-//	public Persona clone() {
-//		try {
-//			return (Persona)super.clone();
-//		} catch (CloneNotSupportedException e) {
-//			e.printStackTrace();
-//			return null;
-//		}
-//	}
+	
+	@Override
+	public Persona clone() {
+		try {
+			return (Persona)super.clone();
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 }

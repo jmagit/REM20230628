@@ -36,15 +36,7 @@ public class PersonasRepositoryMock implements PersonasRepository {
 	public List<Persona> getAll() {
 //		return Collections.unmodifiableList(listado);
 		return listado.stream()
-//				.map(item -> {
-//			try {
-//				return (Persona)item.clone();
-//			} catch (CloneNotSupportedException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//				return null;
-//			}
-//		})
+				.map(p -> p.clone())
 				.toList();
 	}
 	@Override

@@ -7,6 +7,7 @@ public class Alumno extends Persona {
 	public Alumno() {
 		super(0, "(Anonimo)", 67);
 	}
+
 	public Alumno(int id, String nombre, int EDAD_JUBILACION) {
 		super(id, nombre, EDAD_JUBILACION);
 	}
@@ -25,21 +26,16 @@ public class Alumno extends Persona {
 		// TODO Auto-generated method stub
 
 	}
+
 	@Override
 	public void pintate() {
 		System.out.println(toString());
 	}
-	
-	
+
 	@Override
 	public Alumno clone() {
 		Alumno copia = null;
-		try {
-			copia = (Alumno)super.clone();
-		} catch (CloneNotSupportedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		copia = (Alumno) super.clone();
 		return copia;
 	}
 
