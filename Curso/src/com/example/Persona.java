@@ -12,7 +12,7 @@ import java.util.function.BiConsumer;
 import com.example.contracts.Grafico;
 import com.example.exceptions.GraficosException;
 
-public abstract class Persona implements Grafico, Comparable<Persona> {
+public abstract class Persona implements Grafico, Comparable<Persona>, Cloneable {
 	public static class Asignatura {
 		
 	}
@@ -201,5 +201,13 @@ public abstract class Persona implements Grafico, Comparable<Persona> {
 	public int compareTo(Persona o) {
 		return id - o.id;
 	}
-
+//	@Override
+//	public Persona clone() {
+//		try {
+//			return (Persona)super.clone();
+//		} catch (CloneNotSupportedException e) {
+//			e.printStackTrace();
+//			return null;
+//		}
+//	}
 }

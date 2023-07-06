@@ -9,13 +9,15 @@ public class Alumno extends Persona {
 	}
 	public Alumno(int id, String nombre, int EDAD_JUBILACION) {
 		super(id, nombre, EDAD_JUBILACION);
-		// TODO Auto-generated constructor stub
+	}
+
+	public Alumno(int id, String nombre, String apellidos, LocalDate fechaNacimiento, int EDAD_JUBILACION) {
+		super(id, nombre, apellidos, fechaNacimiento, false, EDAD_JUBILACION);
 	}
 
 	public Alumno(int id, String nombre, String apellidos, LocalDate fechaNacimiento, boolean conflictivo,
 			int EDAD_JUBILACION) {
 		super(id, nombre, apellidos, fechaNacimiento, conflictivo, EDAD_JUBILACION);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -28,5 +30,17 @@ public class Alumno extends Persona {
 		System.out.println(toString());
 	}
 	
+	
+	@Override
+	public Alumno clone() {
+		Alumno copia = null;
+		try {
+			copia = (Alumno)super.clone();
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return copia;
+	}
 
 }

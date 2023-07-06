@@ -54,12 +54,15 @@ public class Profesor extends Persona implements AutoCloseable {
 	}
 	
 	@Override
-	protected Profesor clone() {
+	public Profesor clone() {
 		Profesor copia = null;
 		try {
 			copia = (Profesor)super.clone();
 		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		copia.salario = salario;
 		//copia.asignaturas = List.of(asignaturas);
 		return copia;
 	}
