@@ -245,9 +245,9 @@ public class Principal {
 		op = (a, b) -> a * b;
 		System.out.println(calcula(2.0, 3.0, op));
 		System.out.println(calcula(2.0, 3.0, (a, b) -> {
-			double rslt;
-			rslt = a - b;
-			return rslt;
+			double result;
+			result = a - b;
+			return result;
 		}));
 		System.out.println(calcula(2.0, 3.0, (a, b) -> a - b));
 		System.out.println(calcula(2.0, 3.0, new BinaryOperator<Double>() {
