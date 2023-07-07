@@ -1,6 +1,7 @@
 package com.example;
 
 import java.io.Serial;
+import java.lang.Thread.State;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.time.DateTimeException;
@@ -14,6 +15,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.Future;
 import java.util.function.BiConsumer;
 import java.util.function.BinaryOperator;
 import java.util.function.Function;
@@ -39,23 +41,62 @@ public class Principal {
 		try {
 //			reflexion("com.example.Calculadora", "calc");
 //			reflexion("com.example.Falsa", "divide");
-			consultas();
+			multihilo();
+			System.out.println("soy el main");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	public static void paralelos() {
-		List<Integer> listOfIntegers = List.of(22,23,1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15);
+	public static void multihilo() throws Exception {
+		var h1 = new Thread(() -> {
+			for (int i = 0; i++ < 100;) {
+				System.out.println("soy el hilo 1: " + i);
+				try {
+					Thread.sleep(2);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			System.out.println("soy el hilo 1: Termine");
+		});
+		var h2 = new Thread(() -> {
+			for (int i = 0; i++ < 50;) {
+				System.out.println("soy el hilo 2: " + i);
+				if (i == 30)
+					throw new IllegalArgumentException();
+			}
+			System.out.println("soy el hilo 2: Termine");
+		});
+		var h3 = new Thread(() -> paralelos());
+//		h1.start();
+//		(new Thread(() -> consultas())).start();
+		(new Thread(() -> paralelos())).start();
+		h3.start();
+		Thread.sleep(1);
+		System.out.println(h3.getState());
+//		h2.start();
+		while (h3.getState() != State.TERMINATED) {
+			System.out.println("Espero");
+			Thread.sleep(1);
+		}
+		System.out.println(h3.getState());
+	}
+
+	public static synchronized void paralelos() {
+		List<Integer> listOfIntegers = List.of(22, 23, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15);
 		System.out.println("Sequential Stream: ");
-		listOfIntegers.stream().parallel().map(v -> v*v).sequential().sorted().forEach(e -> System.out.print(e + " "));
+		listOfIntegers.stream().parallel().map(v -> v * v).sequential().sorted()
+				.forEach(e -> System.out.print(e + " "));
 		System.out.println("\nParallel Stream: ");
-		listOfIntegers.parallelStream().map(v -> v*v).sequential().sorted().forEach(e -> System.out.print(e + " "));
+		listOfIntegers.parallelStream().map(v -> v * v).sequential().sorted().forEach(e -> System.out.print(e + " "));
+		System.out.println("\n");
 
 	}
 
-	public static void consultas() throws Exception {
+	public static void consultas() {
 		PersonasRepository dao = new PersonasRepositoryMock();
 		dao.add(new Profesor(22, "El", "Nuevo", LocalDate.of(1969, 9, 9), true, 1000));
 		var copia = dao.getAll();
