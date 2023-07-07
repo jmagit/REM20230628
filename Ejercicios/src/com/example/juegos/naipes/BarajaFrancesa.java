@@ -9,7 +9,7 @@ public class BarajaFrancesa extends Baraja<NaipeFrances> {
 	}
 
 	private static NaipeFrances[] generaCartas() {
-		var cartas = new NaipeFrances[4 * NaipeFrances.CARTASxPALO];
+		var cartas = new NaipeFrances[NaipeFrances.Palos.values().length * NaipeFrances.CARTASxPALO];
 		int delta = 0;
 		for (NaipeFrances.Palos palo : NaipeFrances.Palos.values()) {
 			for (byte i = 0; i < NaipeFrances.CARTASxPALO; i++)

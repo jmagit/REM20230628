@@ -86,25 +86,25 @@ public abstract class Baraja<T> {
     }
 
     public void barajar() {
-        class Orden {
-            public final T carta;
-            public final int posicion;
+//        class Orden {
+//            public final T carta;
+//            public final int posicion;
+//
+//            public Orden(T carta, int posicion) {
+//                this.carta = carta;
+//                this.posicion = posicion;
+//            }
+//        }
+//        Random rnd = new Random();
+//        mazo = new ArrayDeque<T>(Arrays.asList(cartas).stream()
+//                .map(item -> new Orden(item, rnd.nextInt(10000)))
+//                .sorted((a, b) -> a.posicion - b.posicion)
+//                .map(item -> item.carta)
+//                .toList());
 
-            public Orden(T carta, int posicion) {
-                this.carta = carta;
-                this.posicion = posicion;
-            }
-        }
-        Random rnd = new Random();
-        mazo = new ArrayDeque<T>(Arrays.asList(cartas).stream()
-                .map(item -> new Orden(item, rnd.nextInt(10000)))
-                .sorted((a, b) -> a.posicion - b.posicion)
-                .map(item -> item.carta)
-                .toList());
-
-//        var lista = Arrays.asList(cartas);
-//        Collections.shuffle(lista);
-//        mazo = new ArrayDeque<T>(lista);
+        var lista = Arrays.asList(cartas);
+        Collections.shuffle(lista);
+        mazo = new ArrayDeque<T>(lista);
     }
 
     public List<T> getMazo() throws JuegoException {

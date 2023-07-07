@@ -47,8 +47,8 @@ public class Principal {
 //		System.out.println(a + " + " + Double.parseDouble(String.format("%.15f", b).replace(',','.'))  + " = " + (a+b));
 		// System.out.println((new BigDecimal(0.1+0.2)).setScale(16,
 		// RoundingMode.HALF_DOWN).doubleValue());
-		app.naipes();
-//		app.vending();
+//		app.naipes();
+		app.vending();
 	}
 
 	/**
@@ -242,6 +242,7 @@ public class Principal {
 			System.out.println("\nMazo\n-------------------------------");
 			b.barajar();
 			b.getMazo().forEach(System.out::println);
+			System.out.println("\nEmpiezo con " + b.getMazo().size());
 			var manos = b.reparte(4, 5);
 			manos.forEach(item -> {
 				System.out.println("\nJugador\n-------------------------------");
