@@ -71,3 +71,41 @@ Características:
     1. <https://tutobasico.com/basicos3-java/>
     2. <http://ejerciciosresueltosprogramacion.blogspot.com/>
     3. <https://www.discoduroderoer.es/ejercicios-propuestos-y-resueltos-programacion-orientado-a-objetos-java/>
+
+# Curso de Spring
+
+## Documentación
+
+- https://docs.spring.io/spring-boot/docs/current/reference/html/
+- https://docs.spring.io/spring-data/commons/docs/current/reference/html/
+- https://docs.spring.io/spring-data/jpa/docs/current/reference/html/
+- https://docs.spring.io/spring-data/mongodb/docs/current/reference/html/
+- https://docs.spring.io/spring-data/redis/docs/current/reference/html/
+- https://docs.spring.io/spring-framework/docs/current/reference/html/web.html#spring-web
+- https://docs.spring.io/spring-data/rest/docs/current/reference/html/
+- https://docs.spring.io/spring-cloud-commons/docs/current/reference/html/#spring-cloud-loadbalancer
+- https://docs.spring.io/spring-cloud-config/docs/current/reference/html/
+- https://docs.spring.io/spring-security/reference/index.html
+
+## Ejemplos
+
+- https://github.com/spring-projects/spring-data-examples
+- https://github.com/spring-projects/spring-data-rest-webmvc
+- https://github.com/spring-projects/spring-hateoas-examples
+
+## Base de datos de ejemplos
+
+- [Página principal Sakila](https://dev.mysql.com/doc/sakila/en/)
+- [Diagrama de la BD Sakila](http://trifulcas.com/wp-content/uploads/2018/03/sakila-er.png)
+
+## Paquetes Java
+
+- https://downloads.mysql.com/archives/get/p/3/file/mysql-connector-java-5.1.49.zip  
+- https://sourceforge.net/projects/hibernate/files/hibernate-orm/5.6.5.Final/hibernate-release-5.6.5.Final.zip/download
+
+## Servidores en Docker
+
+### Bases de datos
+
+- docker run -d --name mysql-sakila -e MYSQL_ROOT_PASSWORD=root -p 3306:3306 jamarton/mysql-sakila
+
