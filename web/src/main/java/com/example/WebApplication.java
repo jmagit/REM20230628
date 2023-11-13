@@ -1,12 +1,15 @@
 package com.example;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.example.IoC.EjemplosIoC;
 import com.example.IoC.Inyectable;
 import com.example.IoC.OtroComponente;
+import com.example.IoC.Tonteria;
 
 @SpringBootApplication
 public class WebApplication implements CommandLineRunner {
@@ -16,10 +19,20 @@ public class WebApplication implements CommandLineRunner {
 	}
 
 	@Autowired
+//	@Qualifier("antigua")
 	Inyectable srv;
 
-	@Autowired
+	@Autowired(required = false)
 	OtroComponente comp;
+	
+	@Autowired
+	Tonteria unaTonteria;
+	
+	@Autowired
+	Tonteria unaTonteriaDep;
+	
+	@Autowired
+	EjemplosIoC eje;
 	
 	@Override
 	public void run(String... args) throws Exception {
@@ -27,7 +40,14 @@ public class WebApplication implements CommandLineRunner {
 		srv.run();
 		srv.add();
 		srv.cuantos();
-		comp.exec();
+		if(comp != null) comp.exec();
+		unaTonteria.dime();
+		unaTonteriaDep.dime();
+		System.out.println(eje.toString());
+		
+//		var x = new EjemplosIoC(1, "Javi");
+//		System.out.println(x.toString());
+		
 	}
 
 }

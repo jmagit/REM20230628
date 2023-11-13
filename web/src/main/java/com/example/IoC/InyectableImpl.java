@@ -1,8 +1,12 @@
 package com.example.IoC;
 
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 @Component
+//@Qualifier("antigua")
+@Profile("default")
 public class InyectableImpl implements Inyectable {
 	private Dependencia dep;
 	

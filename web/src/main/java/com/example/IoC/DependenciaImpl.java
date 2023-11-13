@@ -1,10 +1,14 @@
 package com.example.IoC;
 
 import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Profile;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 @Service
 @Primary
+//@Scope("prototype")
+@Profile("default")
 public class DependenciaImpl implements Dependencia {
 	private int contador = 0;
 	public DependenciaImpl() {
