@@ -77,7 +77,15 @@ public class WebApplication implements CommandLineRunner {
 //				System.out.println(actor);
 //				actor.getFilmActors().forEach(p -> System.out.println(p.getFilm().getTitle()));
 //			});
-		dao.findAll(PageRequest.of(0, 10, Sort.by("actorId"))).forEach(System.out::println);
+//		dao.findAll(PageRequest.of(0, 10, Sort.by("actorId"))).forEach(System.out::println);
+//		Actor actor = new Actor(0, "PP", "4g");
+//		if(actor.isValid()) {
+//			dao.save(actor);
+//		} else {
+//			System.err.println(actor.getErrorsMessage());
+//		}
+//		dao.findByActorIdGreaterThan(200).forEach(System.out::println);
+
 	}
 	
 	@Transactional
