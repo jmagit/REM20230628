@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 
 import com.example.IoC.EjemplosIoC;
 import com.example.IoC.Inyectable;
@@ -12,6 +14,8 @@ import com.example.IoC.OtroComponente;
 import com.example.IoC.Tonteria;
 import com.example.domains.contracts.reposiries.ActorRepository;
 import com.example.domains.entities.Actor;
+
+import jakarta.transaction.Transactional;
 
 @SpringBootApplication
 public class WebApplication implements CommandLineRunner {
@@ -39,6 +43,7 @@ public class WebApplication implements CommandLineRunner {
 	@Autowired
 	ActorRepository dao;
 	
+	@Transactional
 	@Override
 	public void run(String... args) throws Exception {
 		System.out.println("Aplicacion arrancada");
@@ -51,7 +56,32 @@ public class WebApplication implements CommandLineRunner {
 //			dao.save(actor);
 //		}
 //		dao.deleteById(201);
-		dao.findAll().forEach(System.out::println);
+//		dao.findAll().forEach(System.out::println);
+//		dao.findTop5ByFirstNameStartingWithOrderByLastName("P").forEach(System.out::println);
+//		dao.findTop5ByFirstNameStartingWith("P", Sort.by("firstName", "lastName").ascending()).forEach(System.out::println);
+//		dao.findByActorIdGreaterThan(200).forEach(System.out::println);
+//		dao.findNovedadesJPQL(200).forEach(System.out::println);
+//		dao.findNovedadesSQL(200).forEach(System.out::println);
+//		dao.findAll((root, query, builder) -> builder.greaterThan(root.get("actorId"), 200))
+//			.forEach(System.out::println);
+//		dao.findAll((root, query, builder) -> builder.lessThan(root.get("actorId"), 10))
+//			.forEach(System.out::println);
+//		var item = dao.findById(1);
+//		if(item.isPresent()) {
+//			Actor actor = item.get();
+//			System.out.println(actor);
+//			actor.getFilmActors().forEach(p -> System.out.println(p.getFilm().getTitle()));
+//		}
+//		dao.findAll((root, query, builder) -> builder.lessThan(root.get("actorId"), 5))
+//			.forEach(actor -> {
+//				System.out.println(actor);
+//				actor.getFilmActors().forEach(p -> System.out.println(p.getFilm().getTitle()));
+//			});
+		dao.findAll(PageRequest.of(0, 10, Sort.by("actorId"))).forEach(System.out::println);
+	}
+	
+	@Transactional
+	void transaccion() {
 		
 	}
 	
