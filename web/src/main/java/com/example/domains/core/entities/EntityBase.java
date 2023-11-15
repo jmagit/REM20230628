@@ -57,5 +57,5 @@ public abstract class EntityBase<E> {
 	public boolean isInvalid() {
 		return !isValid();
 	}
-	
+
 }
