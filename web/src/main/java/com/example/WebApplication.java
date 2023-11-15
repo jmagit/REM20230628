@@ -13,7 +13,12 @@ import com.example.IoC.Inyectable;
 import com.example.IoC.OtroComponente;
 import com.example.IoC.Tonteria;
 import com.example.domains.contracts.reposiries.ActorRepository;
+import com.example.domains.contracts.reposiries.FilmRepository;
 import com.example.domains.entities.Actor;
+import com.example.domains.entities.dtos.ActorDTO;
+import com.example.domains.entities.dtos.ActorDTO2;
+import com.example.domains.entities.dtos.ActorShort;
+import com.example.domains.entities.dtos.TituloAndIdioma;
 
 import jakarta.transaction.Transactional;
 
@@ -42,6 +47,8 @@ public class WebApplication implements CommandLineRunner {
 	
 	@Autowired
 	ActorRepository dao;
+	@Autowired
+	FilmRepository daoF;
 	
 	@Transactional
 	@Override
@@ -85,7 +92,17 @@ public class WebApplication implements CommandLineRunner {
 //			System.err.println(actor.getErrorsMessage());
 //		}
 //		dao.findByActorIdGreaterThan(200).forEach(System.out::println);
-
+//		dao.findByActorIdGreaterThan(200).forEach(f-> System.out.println(ActorDTO.from(f)));
+//		dao.findByActorIdGreaterThan(200).forEach(f-> System.out.println(f.getClass().getName()));
+//		dao.readByActorIdGreaterThan(200).forEach(System.out::println);
+//		dao.queryByActorIdGreaterThan(200).forEach(f-> System.out.println(f.getId() + " " + f.getNombre() 
+//			+ " " + f.getClass().getName()));
+//		dao.getByActorIdGreaterThan(200, ActorDTO.class).forEach(System.out::println);
+//		dao.getByActorIdGreaterThan(200, ActorShort.class).forEach(f-> System.out.println(f.getId() + " " + f.getNombre()));
+//		dao.findAllBy(ActorDTO.class).forEach(System.out::println);
+//		daoF.findAllBy(TituloAndIdioma.class).forEach(f-> System.out.println(f.getTitle() + " " + f.getIdioma()));
+//		dao.findByQueryName().forEach(System.out::println);
+		dao.getByActorIdGreaterThan(200, ActorDTO2.class).forEach(System.out::println);
 	}
 	
 	@Transactional

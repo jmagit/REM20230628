@@ -21,7 +21,7 @@ import com.example.domains.core.validations.NIF;
  */
 @Entity
 @Table(name="actor")
-@NamedQuery(name="Actor.findAll", query="SELECT a FROM Actor a")
+@NamedQuery(name="Actor.findAll", query="SELECT a FROM Actor a where a.actorId > 200")
 public class Actor extends EntityBase<Actor> implements Serializable {
 	private static final long serialVersionUID = 1L;
 
