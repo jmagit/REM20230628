@@ -12,6 +12,7 @@ import com.example.IoC.EjemplosIoC;
 import com.example.IoC.Inyectable;
 import com.example.IoC.OtroComponente;
 import com.example.IoC.Tonteria;
+import com.example.application.services.CatalogoService;
 import com.example.domains.contracts.reposiries.ActorRepository;
 import com.example.domains.contracts.reposiries.FilmRepository;
 import com.example.domains.contracts.services.ActorService;
@@ -53,6 +54,9 @@ public class WebApplication implements CommandLineRunner {
 	
 	@Autowired
 	ActorService srv;
+
+	@Autowired
+	CatalogoService appSrv;
 	
 	@Transactional
 	@Override
@@ -107,8 +111,9 @@ public class WebApplication implements CommandLineRunner {
 //		daoF.findAllBy(TituloAndIdioma.class).forEach(f-> System.out.println(f.getTitle() + " " + f.getIdioma()));
 //		dao.findByQueryName().forEach(System.out::println);
 //		dao.getByActorIdGreaterThan(200, ActorDTO2.class).forEach(System.out::println);
-		srv.getByProjection(ActorDTO2.class).forEach(System.out::println);
-		srv.add(new Actor(0, "PP", "44g"));
+//		srv.getByProjection(ActorDTO2.class).forEach(System.out::println);
+//		srv.add(new Actor(1, "PP", "4g"));
+		var n = appSrv.novedades();
 	}
 	
 	@Transactional
