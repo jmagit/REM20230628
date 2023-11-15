@@ -1,0 +1,111 @@
+package com.example.domains.services;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+
+import com.example.domains.contracts.reposiries.ActorRepository;
+import com.example.domains.contracts.services.ActorService;
+import com.example.domains.entities.Actor;
+import com.example.exceptions.DuplicateKeyException;
+import com.example.exceptions.InvalidDataException;
+import com.example.exceptions.NotFoundException;
+
+import jakarta.transaction.Transactional;
+
+@Service
+public class ActorServiceImpl implements ActorService {
+	private ActorRepository dao;
+
+	public ActorServiceImpl(ActorRepository dao) {
+		this.dao = dao;
+	}
+
+	@Override
+	public <T> List<T> getByProjection(Class<T> type) {
+		return dao.findAllBy(type);
+	}
+
+	@Override
+	public <T> List<T> getByProjection(Sort sort, Class<T> type) {
+		return dao.findAllBy(sort, type);
+	}
+
+	@Override
+	public <T> Page<T> getByProjection(Pageable pageable, Class<T> type) {
+		return dao.findAllBy(pageable, type);
+	}
+
+	@Override
+	public List<Actor> getAll(Sort sort) {
+		return dao.findAll(sort);
+	}
+
+	@Override
+	public Page<Actor> getAll(Pageable pageable) {
+		return dao.findAll(pageable);
+	}
+
+	@Override
+	public List<Actor> getAll() {
+		return dao.findAll();
+	}
+
+	@Override
+	public Optional<Actor> getOne(Integer id) {
+		return dao.findById(id);
+	}
+
+	@Override
+	@Transactional
+	public Actor add(Actor item) throws DuplicateKeyException, InvalidDataException {
+		if(item == null)
+			throw new IllegalArgumentException("Faltan datos");
+		if(item.isInvalid())
+			throw new InvalidDataException("Datos invalidos", item.getErrorsFields());
+		if(dao.existsById(item.getActorId()))
+			throw new DuplicateKeyException("Datos duplicados");
+		return dao.save(item);
+	}
+
+	@Override
+	public Actor modify(Actor item) throws NotFoundException, InvalidDataException {
+		if(item == null)
+			throw new IllegalArgumentException("Faltan datos");
+		if(item.isInvalid())
+			throw new InvalidDataException("Datos invalidos", item.getErrorsFields());
+		if(!dao.existsById(item.getActorId()))
+			throw new NotFoundException();
+		return dao.save(item);
+	}
+
+	@Override
+	public void delete(Actor item) throws InvalidDataException {
+		if(item == null)
+			throw new IllegalArgumentException("Faltan datos");
+		deleteById(item.getActorId());
+	}
+
+	@Override
+	public void deleteById(Integer id) {
+		dao.deleteById(id);
+	}
+
+	@Override
+	public void repartePremios() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public List<Actor> novedades() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

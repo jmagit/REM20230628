@@ -14,6 +14,7 @@ import com.example.IoC.OtroComponente;
 import com.example.IoC.Tonteria;
 import com.example.domains.contracts.reposiries.ActorRepository;
 import com.example.domains.contracts.reposiries.FilmRepository;
+import com.example.domains.contracts.services.ActorService;
 import com.example.domains.entities.Actor;
 import com.example.domains.entities.dtos.ActorDTO;
 import com.example.domains.entities.dtos.ActorDTO2;
@@ -45,10 +46,13 @@ public class WebApplication implements CommandLineRunner {
 //	@Autowired
 //	EjemplosIoC eje;
 	
+//	@Autowired
+//	ActorRepository dao;
+//	@Autowired
+//	FilmRepository daoF;
+	
 	@Autowired
-	ActorRepository dao;
-	@Autowired
-	FilmRepository daoF;
+	ActorService srv;
 	
 	@Transactional
 	@Override
@@ -102,7 +106,9 @@ public class WebApplication implements CommandLineRunner {
 //		dao.findAllBy(ActorDTO.class).forEach(System.out::println);
 //		daoF.findAllBy(TituloAndIdioma.class).forEach(f-> System.out.println(f.getTitle() + " " + f.getIdioma()));
 //		dao.findByQueryName().forEach(System.out::println);
-		dao.getByActorIdGreaterThan(200, ActorDTO2.class).forEach(System.out::println);
+//		dao.getByActorIdGreaterThan(200, ActorDTO2.class).forEach(System.out::println);
+		srv.getByProjection(ActorDTO2.class).forEach(System.out::println);
+		srv.add(new Actor(0, "PP", "44g"));
 	}
 	
 	@Transactional
