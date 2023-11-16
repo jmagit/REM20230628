@@ -32,12 +32,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/actores/v1")
+@RequestMapping("/api/actores")
 public class ActorResource {
 	@Autowired
 	private ActorService srv;
 
-	@GetMapping
+	@GetMapping(path = "/v1")
+	public List<ActorShort> getAllv1() {
+		return srv.getByProjection(ActorShort.class);
+	}
+	@GetMapping(path = "/v2")
 	public List<ActorShort> getAll() {
 		return srv.getByProjection(ActorShort.class);
 	}
@@ -48,7 +52,7 @@ public class ActorResource {
 	}
 
 
-	@GetMapping(path = "/{id}")
+	@GetMapping(path = {"/v1/{id}","/v2/{id}"})
 	public ActorDTO getOne(@PathVariable int id) throws NotFoundException {
 		var item = srv.getOne(id);
 		if(item.isEmpty())
