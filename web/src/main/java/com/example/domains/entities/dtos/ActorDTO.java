@@ -3,6 +3,8 @@ package com.example.domains.entities.dtos;
 import com.example.domains.entities.Actor;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -11,6 +13,8 @@ public class ActorDTO {
 	@JsonProperty("id")
 	private int actorId;
 	@JsonProperty("nombre")
+	@NotBlank
+	@Size(min=2, max = 45)
 	private String firstName;
 	@JsonProperty("apellidos")
 	private String lastName;
