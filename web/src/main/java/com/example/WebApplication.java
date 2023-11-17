@@ -1,35 +1,54 @@
 package com.example;
 
+import java.util.TreeMap;
+
+import org.springdoc.core.customizers.OpenApiCustomizer;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
+import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.context.annotation.Bean;
+import org.springframework.web.client.RestTemplate;
 
-import com.example.IoC.EjemplosIoC;
-import com.example.IoC.Inyectable;
-import com.example.IoC.OtroComponente;
-import com.example.IoC.Tonteria;
 import com.example.application.services.CatalogoService;
-import com.example.domains.contracts.reposiries.ActorRepository;
-import com.example.domains.contracts.reposiries.FilmRepository;
 import com.example.domains.contracts.services.ActorService;
-import com.example.domains.entities.Actor;
-import com.example.domains.entities.dtos.ActorDTO;
-import com.example.domains.entities.dtos.ActorDTO2;
-import com.example.domains.entities.dtos.ActorShort;
-import com.example.domains.entities.dtos.TituloAndIdioma;
 
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
+import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import jakarta.transaction.Transactional;
 
+@SecurityScheme(name = "bearerAuth", type = SecuritySchemeType.HTTP, scheme = "bearer", bearerFormat = "JWT")
 @SpringBootApplication
+@EnableDiscoveryClient
+@EnableFeignClients("com.example.application.proxies")
 public class WebApplication implements CommandLineRunner {
 
 	public static void main(String[] args) {
 		SpringApplication.run(WebApplication.class, args);
 	}
+
+    @Bean
+    OpenApiCustomizer sortSchemasAlphabetically() {
+        return openApi -> {
+            var schemas = openApi.getComponents().getSchemas();
+            openApi.getComponents().setSchemas(new TreeMap<>(schemas));
+        };
+    }
+    
+    @Bean
+    RestTemplate srvRest(RestTemplateBuilder builder) {
+    	return builder.build();
+    }
+    
+    @Bean
+    @LoadBalanced
+    RestTemplate srvRestLB(RestTemplateBuilder builder) {
+    	return builder.build();
+    }
 
 //	@Autowired
 ////	@Qualifier("antigua")
