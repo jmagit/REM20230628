@@ -59,13 +59,13 @@ public class EmpleadosResource {
 	}	
 	
 	@PostMapping("/fileupload")
-    public String formUploadFile(@RequestParam("id") int id, @RequestParam("filetoupload") MultipartFile file) throws NotFoundException, IOException {
+    public ResponseEntity<byte[]> formUploadFile(@RequestParam("id") int id, @RequestParam("filetoupload") MultipartFile file) throws NotFoundException, IOException {
 		var item = dao.findById(id);
 		if(item.isEmpty())
 			throw new NotFoundException();
 		item.get().setPicture(file.getBytes());
 		dao.save(item.get());
-		return "OK";
+		return ResponseEntity.ok().header("content-type", "image/png").body(item.get().getPicture());
     }
 
 }
