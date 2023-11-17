@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+	<meta charset="UTF-8">
+	<title>fileupload</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+
+	<h1>File Uploads</h1>
+	<form action="/api/empleados/v1/fileupload" method="post" enctype="multipart/form-data">
+		<p>
+			<label>ID: <input type="number" name="id" value="2"></label>
+		</p>
+		<p>
+			<input type="file" name="filetoupload" required><br>
+		</p>
+		<p>
+			<input type="submit">
+		</p>
+	</form>
+</body>
+
+</html>
