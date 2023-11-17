@@ -7,8 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -22,6 +24,7 @@ import org.springframework.web.client.RestTemplate;
 import com.example.application.proxies.CatalogoProxy;
 import com.example.domains.entities.dtos.PeliCortaDTO;
 
+@RefreshScope
 @RestController
 @RequestMapping("/cotilla")
 public class CotillaResource {
@@ -31,7 +34,15 @@ public class CotillaResource {
 	RestTemplate srvRestLB;
 	@Autowired
 	CatalogoProxy proxy;
+
+	@Value("${valor.ejemplo:Sin valor}")
+	String valorConfig;
 	
+	@GetMapping(path = "/config")
+	String getConfig() {
+		return valorConfig;
+	}
+
 	@GetMapping("/rt/pelis")
 	List<PeliCortaDTO> getPelisRt() {
 		ResponseEntity<List<PeliCortaDTO>> response = srvRest.exchange(

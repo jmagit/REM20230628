@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 //@Qualifier("nueva")
-@Profile("test")
+@Profile("production")
 public class InyectableMockImpl implements Inyectable {
 	@Override
 	public void run() {

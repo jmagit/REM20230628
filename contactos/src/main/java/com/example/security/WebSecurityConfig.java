@@ -41,9 +41,10 @@ public class WebSecurityConfig {
                 .addFilterAfter(new JWTAuthorizationFilter(SECRET), UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(requests -> requests
                 	.requestMatchers("/error").permitAll()
-//        			.requestMatchers(HttpMethod.POST, "/api/v1/contactos").authenticated()
-//        			.requestMatchers(HttpMethod.PUT, "/api/v1/contactos").authenticated()
-//        			.requestMatchers(HttpMethod.DELETE, "/api/v1/contactos").authenticated()
+        			.requestMatchers(HttpMethod.GET, "/api/v1/contactos").authenticated()
+        			.requestMatchers(HttpMethod.POST, "/api/v1/contactos").authenticated()
+        			.requestMatchers(HttpMethod.PUT, "/api/v1/contactos").authenticated()
+        			.requestMatchers(HttpMethod.DELETE, "/api/v1/contactos").authenticated()
                     .anyRequest().permitAll()
                  )
                 .build();
